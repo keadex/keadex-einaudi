@@ -1,4 +1,4 @@
-import { ObjectType, Directive, Field, ID } from '@nestjs/graphql';
+import { ObjectType, Directive, Field } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
