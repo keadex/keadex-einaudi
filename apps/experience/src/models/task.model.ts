@@ -6,7 +6,7 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 @ObjectType()
 @Directive('@key(fields: "_id")')
 export class Task {
-  @Field((type) => String)
+  @Field(() => String)
   @Prop()
   _id: MongooseSchema.Types.ObjectId;
 

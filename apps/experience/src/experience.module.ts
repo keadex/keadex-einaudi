@@ -1,30 +1,45 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
-import { ExperienceController } from './experience.controller';
-import { ExperienceService } from './services/experience.service';
+import { ExperienceService } from './services/experience/experience.service';
 import ConfigSchemaValidator from './config/config.schema-validator';
 import { Experience, ExperienceSchema } from './models/experience.model';
+import { GraphQLFederationModule } from '@nestjs/graphql';
+import { TaskModule } from './modules/task/task.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['.env.development', '.env'],
+      envFilePath: ['apps/experience/.development.env', 'apps/experience/.env'],
       isGlobal: true,
       cache: true,
       validationSchema: ConfigSchemaValidator,
       validationOptions: {
-        allowUnknown: false,
+        allowUnknown: true,
         abortEarly: true,
       },
       expandVariables: true,
     }),
-    MongooseModule.forRoot(process.env.DATABASE_EXPERIENCE),
+    MongooseModule.forRootAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          uri: configService.get('DATABASE_EXPERIENCE'),
+        };
+      },
+      inject: [ConfigService],
+    }),
     MongooseModule.forFeature([
       { name: Experience.name, schema: ExperienceSchema },
     ]),
+    GraphQLFederationModule.forRoot({
+      autoSchemaFile: true,
+      playground: true,
+      sortSchema: true,
+      debug: true,
+    }),
+    TaskModule,
   ],
-  controllers: [ExperienceController],
   providers: [ExperienceService],
 })
 export class ExperienceModule {}
