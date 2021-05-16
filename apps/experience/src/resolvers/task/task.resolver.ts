@@ -15,7 +15,9 @@ export class TaskResolver {
   constructor(private taskService: TaskService) {}
 
   @Query(() => Task, { name: 'task' })
-  async getTask(@Args('_id') _id: Schema.Types.ObjectId): Promise<Task> {
+  async getTask(
+    @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
+  ): Promise<Task> {
     return this.taskService.findById(_id);
   }
 

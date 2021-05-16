@@ -20,7 +20,7 @@ export class ExperienceResolver {
 
   @Query(() => Experience, { name: 'experience' })
   async getExperience(
-    @Args('_id') _id: Schema.Types.ObjectId,
+    @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ): Promise<Experience> {
     return this.experienceService.findById(_id);
   }
