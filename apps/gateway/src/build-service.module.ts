@@ -5,8 +5,8 @@ import { decode } from 'jsonwebtoken';
 
 class AuthenticatedDataSource extends RemoteGraphQLDataSource {
   async willSendRequest({ request, context }) {
-    const { userId } = await decode(context.jwt);
-    request.http.headers.set('x-user-id', userId);
+    //const { userId } = await decode(context.jwt);
+    //request.http.headers.set('x-user-id', userId);
   }
 }
 

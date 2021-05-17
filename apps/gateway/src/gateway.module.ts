@@ -7,11 +7,7 @@ import { BuildServiceModule } from './build-service.module';
   imports: [
     GraphQLGatewayModule.forRootAsync({
       useFactory: async () => ({
-        gateway: {
-          serviceList: [
-            /* services */
-          ],
-        },
+        gateway: {},
         server: {
           context: ({ req }) => ({
             jwt: req.headers.authorization,
