@@ -21,21 +21,25 @@ export class ExperienceService {
   }
 
   findById(_id: MongooseSchema.Types.ObjectId) {
-    return this.experienceModel.findById(_id).exec();
+    return this.experienceModel.findById(_id).populate('tasks').exec();
   }
 
   list(filters: ListExperienceDto) {
-    return this.experienceModel.find({ ...filters }).exec();
+    return this.experienceModel
+      .find({ ...filters })
+      .populate('tasks')
+      .exec();
   }
 
   update(payload: UpdateExperienceDto) {
     return this.experienceModel
       .findByIdAndUpdate(payload._id, payload, { new: true })
+      .populate('tasks')
       .exec();
   }
 
   delete(_id: MongooseSchema.Types.ObjectId) {
-    return this.experienceModel.findByIdAndDelete(_id).exec();
+    return this.experienceModel.findByIdAndDelete(_id).populate('tasks').exec();
   }
 
   getHello(): string {

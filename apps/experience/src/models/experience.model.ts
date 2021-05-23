@@ -8,7 +8,6 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 @Directive('@key(fields: "_id")')
 export class Experience {
   @Field(() => String)
-  @Prop()
   _id: MongooseSchema.Types.ObjectId;
 
   @Field()
@@ -27,9 +26,9 @@ export class Experience {
   @Prop()
   avatarFileName: string;
 
-  @Field(() => [String])
+  @Field(() => [Task])
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: Task.name })
-  tasks: MongooseSchema.Types.ObjectId[];
+  tasks: MongooseSchema.Types.ObjectId[] | Task[];
   //tasks?: Task[];
 
   // @Field((type) => [Company])
