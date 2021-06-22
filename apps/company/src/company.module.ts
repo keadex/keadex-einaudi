@@ -7,6 +7,8 @@ import { Company, CompanySchema } from './models/company.model';
 import { GraphQLFederationModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { CompanyResolver } from './resolvers/company/company.resolver';
+import { ExperienceResolver } from './resolvers/experience/experience.resolver';
+import { Experience, ExperienceSchema } from './models/experience.model';
 
 @Module({
   imports: [
@@ -30,7 +32,10 @@ import { CompanyResolver } from './resolvers/company/company.resolver';
       },
       inject: [ConfigService],
     }),
-    MongooseModule.forFeature([{ name: Company.name, schema: CompanySchema }]),
+    MongooseModule.forFeature([
+      { name: Company.name, schema: CompanySchema },
+      { name: Experience.name, schema: ExperienceSchema },
+    ]),
     GraphQLFederationModule.forRoot({
       autoSchemaFile: join(
         process.cwd(),
@@ -39,8 +44,11 @@ import { CompanyResolver } from './resolvers/company/company.resolver';
       playground: true,
       sortSchema: true,
       debug: true,
+      buildSchemaOptions: {
+        orphanedTypes: [Experience],
+      },
     }),
   ],
-  providers: [CompanyService, CompanyResolver],
+  providers: [CompanyService, CompanyResolver, ExperienceResolver],
 })
 export class CompanyModule {}
