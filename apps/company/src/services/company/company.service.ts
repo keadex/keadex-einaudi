@@ -1,51 +1,65 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model, Schema as MongooseSchema } from 'mongoose';
 import {
   CreateCompanyDto,
   ListCompaniesDto,
   UpdateCompanyDto,
 } from '../../dto/company.dto';
-import { Company, CompanyDocument } from '../../models/company.model';
-import { Experience, ExperienceDocument } from '../../models/experience.model';
 
 @Injectable()
 export class CompanyService {
-  constructor(
-    @InjectModel(Company.name)
-    private companyModel: Model<CompanyDocument>,
-    @InjectModel(Experience.name)
-    private experienceModel: Model<ExperienceDocument>,
-  ) {}
-
-  create(companyDto: CreateCompanyDto): Promise<Company> {
-    const createdCompany = new this.companyModel(companyDto);
-    return createdCompany.save();
+  create(companyDto: CreateCompanyDto) {
+    //TODO
   }
 
-  findById(_id: MongooseSchema.Types.ObjectId) {
-    return this.companyModel.findById(_id).exec();
+  findById(_id: string) {
+    return {
+      _id: _id,
+      name: 'Company Name',
+      city: 'Company City',
+      country: 'Company Country',
+      logoFilename: 'Company logo',
+    };
   }
 
   list(filters: ListCompaniesDto) {
-    return this.companyModel.find({ ...filters }).exec();
+    return [
+      {
+        _id: '123',
+        name: 'Company Name',
+        city: 'Company City',
+        country: 'Company Country',
+        logoFilename: 'Company logo',
+      },
+    ];
   }
 
   update(payload: UpdateCompanyDto) {
-    return this.companyModel
-      .findByIdAndUpdate(payload._id, payload, { new: true })
-      .exec();
+    return {
+      _id: '123',
+      name: 'Company Name',
+      city: 'Company City',
+      country: 'Company Country',
+      logoFilename: 'Company logo',
+    };
   }
 
-  async companiesForExperience(_id: MongooseSchema.Types.ObjectId) {
-    const experience = await this.experienceModel
-      .findById(_id)
-      .populate('companies')
-      .exec();
-    return await experience.companies;
+  async companiesForExperience(_id: string) {
+    return await {
+      _id: _id,
+      name: 'Company Name',
+      city: 'Company City',
+      country: 'Company Country',
+      logoFilename: 'Company logo',
+    };
   }
 
-  delete(_id: MongooseSchema.Types.ObjectId) {
-    return this.companyModel.findByIdAndDelete(_id).exec();
+  delete(_id: string) {
+    return {
+      _id: _id,
+      name: 'Company Name',
+      city: 'Company City',
+      country: 'Company Country',
+      logoFilename: 'Company logo',
+    };
   }
 }

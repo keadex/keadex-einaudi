@@ -5,7 +5,6 @@ import {
   Query,
   Mutation,
 } from '@nestjs/graphql';
-import { Schema } from 'mongoose';
 import { Company } from '../../models/company.model';
 import { CompanyService } from '../../services/company/company.service';
 import {
@@ -20,7 +19,7 @@ export class CompanyResolver {
 
   @Query(() => Company, { name: 'company' })
   async getCompany(
-    @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
+    @Args('_id', { type: () => String }) _id: string,
   ): Promise<Company> {
     return this.companyService.findById(_id);
   }
@@ -43,16 +42,14 @@ export class CompanyResolver {
   }
 
   @Mutation(() => Company)
-  async deleteCompany(
-    @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
-  ) {
+  async deleteCompany(@Args('_id', { type: () => String }) _id: string) {
     return this.companyService.delete(_id);
   }
 
   @ResolveReference()
   async resolveReference(reference: {
     __typename: string;
-    _id: Schema.Types.ObjectId;
+    _id: string;
   }): Promise<Company> {
     return this.companyService.findById(reference._id);
   }

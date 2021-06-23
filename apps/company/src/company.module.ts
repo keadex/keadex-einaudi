@@ -1,14 +1,12 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 import { CompanyService } from './services/company/company.service';
 import ConfigSchemaValidator from './config/config.schema-validator';
-import { Company, CompanySchema } from './models/company.model';
 import { GraphQLFederationModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { CompanyResolver } from './resolvers/company/company.resolver';
 import { ExperienceResolver } from './resolvers/experience/experience.resolver';
-import { Experience, ExperienceSchema } from './models/experience.model';
+import { Experience } from './models/experience.model';
 
 @Module({
   imports: [
@@ -23,19 +21,6 @@ import { Experience, ExperienceSchema } from './models/experience.model';
       },
       expandVariables: true,
     }),
-    MongooseModule.forRootAsync({
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => {
-        return {
-          uri: configService.get('DATABASE_COMPANY'),
-        };
-      },
-      inject: [ConfigService],
-    }),
-    MongooseModule.forFeature([
-      { name: Company.name, schema: CompanySchema },
-      { name: Experience.name, schema: ExperienceSchema },
-    ]),
     GraphQLFederationModule.forRoot({
       autoSchemaFile: join(
         process.cwd(),
