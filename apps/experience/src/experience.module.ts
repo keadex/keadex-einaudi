@@ -27,6 +27,7 @@ import { ExperienceResolver } from './resolvers/experience/experience.resolver';
       useFactory: async (configService: ConfigService) => {
         return {
           uri: configService.get('DATABASE_EXPERIENCE'),
+          useFindAndModify: false,
         };
       },
       inject: [ConfigService],
