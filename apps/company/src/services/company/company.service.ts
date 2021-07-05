@@ -7,15 +7,12 @@ import {
   UpdateCompanyDto,
 } from '../../dto/company.dto';
 import { Company, CompanyDocument } from '../../models/company.model';
-import { Experience, ExperienceDocument } from '../../models/experience.model';
 
 @Injectable()
 export class CompanyService {
   constructor(
     @InjectModel(Company.name)
     private companyModel: Model<CompanyDocument>,
-    @InjectModel(Experience.name)
-    private experienceModel: Model<ExperienceDocument>,
   ) {}
 
   create(companyDto: CreateCompanyDto): Promise<Company> {
@@ -35,14 +32,6 @@ export class CompanyService {
     return this.companyModel
       .findByIdAndUpdate(payload._id, payload, { new: true })
       .exec();
-  }
-
-  async companiesForExperience(_id: MongooseSchema.Types.ObjectId) {
-    const experience = await this.experienceModel
-      .findById(_id)
-      .populate('companies')
-      .exec();
-    return await experience.companies;
   }
 
   delete(_id: MongooseSchema.Types.ObjectId) {

@@ -9,6 +9,7 @@ import { join } from 'path';
 import { CompanyResolver } from './resolvers/company/company.resolver';
 import { ExperienceResolver } from './resolvers/experience/experience.resolver';
 import { Experience, ExperienceSchema } from './models/experience.model';
+import { ExperienceService } from './services/experience/experience.service';
 
 @Module({
   imports: [
@@ -24,18 +25,35 @@ import { Experience, ExperienceSchema } from './models/experience.model';
       expandVariables: true,
     }),
     MongooseModule.forRootAsync({
+      connectionName: 'company',
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
           uri: configService.get('DATABASE_COMPANY'),
+          useFindAndModify: false,
         };
       },
       inject: [ConfigService],
     }),
-    MongooseModule.forFeature([
-      { name: Company.name, schema: CompanySchema },
-      { name: Experience.name, schema: ExperienceSchema },
-    ]),
+    MongooseModule.forRootAsync({
+      connectionName: 'experience',
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => {
+        return {
+          uri: configService.get('DATABASE_EXPERIENCE'),
+          useFindAndModify: false,
+        };
+      },
+      inject: [ConfigService],
+    }),
+    MongooseModule.forFeature(
+      [{ name: Company.name, schema: CompanySchema }],
+      'company',
+    ),
+    MongooseModule.forFeature(
+      [{ name: Experience.name, schema: ExperienceSchema }],
+      'experience',
+    ),
     GraphQLFederationModule.forRoot({
       autoSchemaFile: join(
         process.cwd(),
@@ -49,6 +67,11 @@ import { Experience, ExperienceSchema } from './models/experience.model';
       },
     }),
   ],
-  providers: [CompanyService, CompanyResolver, ExperienceResolver],
+  providers: [
+    CompanyService,
+    CompanyResolver,
+    ExperienceService,
+    ExperienceResolver,
+  ],
 })
 export class CompanyModule {}
