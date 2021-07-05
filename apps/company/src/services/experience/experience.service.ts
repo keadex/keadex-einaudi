@@ -15,13 +15,10 @@ export class ExperienceService {
   ) {}
 
   async companiesForExperience(_id: MongooseSchema.Types.ObjectId) {
-    console.log('ciao ' + _id);
     const experience = await this.experienceModel
       .findById(_id)
       .populate({ path: 'companies', model: this.companyModel })
       .exec();
-    console.log('fine');
-    console.log(experience);
     return experience.companies;
   }
 
