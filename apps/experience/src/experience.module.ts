@@ -8,6 +8,8 @@ import { GraphQLFederationModule } from '@nestjs/graphql';
 import { TaskModule } from './modules/task/task.module';
 import { join } from 'path';
 import { ExperienceResolver } from './resolvers/experience/experience.resolver';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
 
 @Module({
   imports: [
@@ -26,7 +28,7 @@ import { ExperienceResolver } from './resolvers/experience/experience.resolver';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
-          uri: configService.get('DATABASE_EXPERIENCE'),
+          uri: configService.get(CONFIG_KEYS.DATABASE_EXPERIENCE),
           useFindAndModify: false,
         };
       },
@@ -44,6 +46,30 @@ import { ExperienceResolver } from './resolvers/experience/experience.resolver';
       sortSchema: true,
       debug: true,
     }),
+    ClientsModule.registerAsync([
+      {
+        name: SERVICES_NAMES.EXPERIENCE_SERVICE,
+        useFactory: async (configService: ConfigService) => {
+          return {
+            transport: Transport.KAFKA,
+            options: {
+              client: {
+                clientId: 'experience',
+                brokers: [
+                  configService.get(CONFIG_KEYS.EXPERIENCE_MS_KAFKA_HOST) +
+                    ':' +
+                    configService.get(CONFIG_KEYS.EXPERIENCE_MS_KAFKA_PORT),
+                ],
+              },
+              consumer: {
+                groupId: 'experience-consumer',
+              },
+            },
+          };
+        },
+        inject: [ConfigService],
+      },
+    ]),
     TaskModule,
   ],
   providers: [ExperienceService, ExperienceResolver],

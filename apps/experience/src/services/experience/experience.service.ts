@@ -1,6 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
+import { ClientProxy } from '@nestjs/microservices';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Schema as MongooseSchema } from 'mongoose';
+import { EVENTS, SERVICES_NAMES } from '../../constants';
 import {
   CreateExperienceDto,
   ListExperienceDto,
@@ -13,10 +15,12 @@ export class ExperienceService {
   constructor(
     @InjectModel(Experience.name)
     private experienceModel: Model<ExperienceDocument>,
+    @Inject(SERVICES_NAMES.EXPERIENCE_SERVICE) private client: ClientProxy,
   ) {}
 
   create(experienceDto: CreateExperienceDto): Promise<Experience> {
     const createdExperience = new this.experienceModel(experienceDto);
+    this.client.emit(EVENTS.EXPERIENCE_CREATED, experienceDto);
     return createdExperience.save();
   }
 
