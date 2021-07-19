@@ -1,5 +1,3 @@
-export const PROVA = 'ciao';
-
 export class SERVICES_NAMES {
   static EXPERIENCE_SERVICE = 'EXPERIENCE_SERVICE';
 }
