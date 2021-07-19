@@ -10,6 +10,9 @@ import { CompanyResolver } from './resolvers/company/company.resolver';
 import { ExperienceResolver } from './resolvers/experience/experience.resolver';
 import { Experience, ExperienceSchema } from './models/experience.model';
 import { ExperienceService } from './services/experience/experience.service';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { CONFIG_KEYS, SERVICES_NAMES, CONNECTIONS_NAMES } from './constants';
+import { ExperienceController } from './controller/experience.controller';
 
 @Module({
   imports: [
@@ -25,22 +28,22 @@ import { ExperienceService } from './services/experience/experience.service';
       expandVariables: true,
     }),
     MongooseModule.forRootAsync({
-      connectionName: 'company',
+      connectionName: CONNECTIONS_NAMES.COMPANY,
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
-          uri: configService.get('DATABASE_COMPANY'),
+          uri: configService.get(CONFIG_KEYS.DATABASE_COMPANY),
           useFindAndModify: false,
         };
       },
       inject: [ConfigService],
     }),
     MongooseModule.forRootAsync({
-      connectionName: 'experience',
+      connectionName: CONNECTIONS_NAMES.EXPERIENCE,
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
-          uri: configService.get('DATABASE_EXPERIENCE'),
+          uri: configService.get(CONFIG_KEYS.DATABASE_EXPERIENCE),
           useFindAndModify: false,
         };
       },
@@ -48,11 +51,11 @@ import { ExperienceService } from './services/experience/experience.service';
     }),
     MongooseModule.forFeature(
       [{ name: Company.name, schema: CompanySchema }],
-      'company',
+      CONNECTIONS_NAMES.COMPANY,
     ),
     MongooseModule.forFeature(
       [{ name: Experience.name, schema: ExperienceSchema }],
-      'experience',
+      CONNECTIONS_NAMES.EXPERIENCE,
     ),
     GraphQLFederationModule.forRoot({
       autoSchemaFile: join(
@@ -66,6 +69,30 @@ import { ExperienceService } from './services/experience/experience.service';
         orphanedTypes: [Experience],
       },
     }),
+    ClientsModule.registerAsync([
+      {
+        name: SERVICES_NAMES.COMPANY_SERVICE,
+        useFactory: async (configService: ConfigService) => {
+          return {
+            transport: Transport.KAFKA,
+            options: {
+              client: {
+                clientId: 'company',
+                brokers: [
+                  configService.get(CONFIG_KEYS.COMPANY_MS_KAFKA_HOST) +
+                    ':' +
+                    configService.get(CONFIG_KEYS.COMPANY_MS_KAFKA_PORT),
+                ],
+              },
+              consumer: {
+                groupId: 'company-consumer',
+              },
+            },
+          };
+        },
+        inject: [ConfigService],
+      },
+    ]),
   ],
   providers: [
     CompanyService,
@@ -73,5 +100,6 @@ import { ExperienceService } from './services/experience/experience.service';
     ExperienceService,
     ExperienceResolver,
   ],
+  controllers: [ExperienceController],
 })
 export class CompanyModule {}

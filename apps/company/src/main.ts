@@ -11,11 +11,15 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
+        clientId: 'company', // company-server
         brokers: [
           process.env.COMPANY_MS_KAFKA_HOST +
             ':' +
             process.env.COMPANY_MS_KAFKA_PORT,
         ],
+      },
+      consumer: {
+        groupId: 'company-consumer', // company-consumer-server
       },
     },
   });
