@@ -19,9 +19,14 @@ export class ExperienceService {
   ) {}
 
   create(experienceDto: CreateExperienceDto): Promise<Experience> {
-    const createdExperience = new this.experienceModel(experienceDto);
-    this.client.emit(EVENTS.EXPERIENCE_CREATED, experienceDto);
-    return createdExperience.save();
+    const newExperience = new this.experienceModel(experienceDto);
+    return newExperience.save().then((createdExperience) => {
+      this.client.emit(EVENTS.EXPERIENCE_CREATED, {
+        ...experienceDto,
+        _id: createdExperience._id,
+      });
+      return createdExperience;
+    });
   }
 
   findById(_id: MongooseSchema.Types.ObjectId) {
