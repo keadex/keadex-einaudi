@@ -10,11 +10,12 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 export class Experience {
   @Field(() => String)
   @Directive('@external')
+  @Prop()
   _id: MongooseSchema.Types.ObjectId;
 
-  @Field(() => [Company])
+  @Field(() => [Company], { nullable: true })
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: Company.name })
-  companies: MongooseSchema.Types.ObjectId[] | Company[];
+  companies?: MongooseSchema.Types.ObjectId[] | Company[];
 }
 
 export type ExperienceDocument = Experience & Document;

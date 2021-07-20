@@ -11,7 +11,7 @@ import { ExperienceResolver } from './resolvers/experience/experience.resolver';
 import { Experience, ExperienceSchema } from './models/experience.model';
 import { ExperienceService } from './services/experience/experience.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { CONFIG_KEYS, SERVICES_NAMES, CONNECTIONS_NAMES } from './constants';
+import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
 import { ExperienceController } from './controller/experience.controller';
 
 @Module({
@@ -28,7 +28,6 @@ import { ExperienceController } from './controller/experience.controller';
       expandVariables: true,
     }),
     MongooseModule.forRootAsync({
-      connectionName: CONNECTIONS_NAMES.COMPANY,
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
@@ -38,25 +37,10 @@ import { ExperienceController } from './controller/experience.controller';
       },
       inject: [ConfigService],
     }),
-    MongooseModule.forRootAsync({
-      connectionName: CONNECTIONS_NAMES.EXPERIENCE,
-      imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => {
-        return {
-          uri: configService.get(CONFIG_KEYS.DATABASE_EXPERIENCE),
-          useFindAndModify: false,
-        };
-      },
-      inject: [ConfigService],
-    }),
-    MongooseModule.forFeature(
-      [{ name: Company.name, schema: CompanySchema }],
-      CONNECTIONS_NAMES.COMPANY,
-    ),
-    MongooseModule.forFeature(
-      [{ name: Experience.name, schema: ExperienceSchema }],
-      CONNECTIONS_NAMES.EXPERIENCE,
-    ),
+    MongooseModule.forFeature([
+      { name: Company.name, schema: CompanySchema },
+      { name: Experience.name, schema: ExperienceSchema },
+    ]),
     GraphQLFederationModule.forRoot({
       autoSchemaFile: join(
         process.cwd(),
