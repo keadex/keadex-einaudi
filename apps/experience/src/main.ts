@@ -33,7 +33,7 @@ async function bootstrap() {
             }),
             winston.format.printf(
               (info) =>
-                `${[info.timestamp]} ${info.level}: [${
+                `${[info.timestamp]} ${info.level.toUpperCase()}: [${
                   info.context ? info.context : `--`
                 }] ${info.message}`,
             ),
