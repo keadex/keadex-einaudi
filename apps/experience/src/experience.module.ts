@@ -1,4 +1,4 @@
-import { Module } from '@nestjs/common';
+import { Logger, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ExperienceService } from './services/experience/experience.service';
@@ -72,6 +72,6 @@ import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
     ]),
     TaskModule,
   ],
-  providers: [ExperienceService, ExperienceResolver],
+  providers: [Logger, ExperienceService, ExperienceResolver],
 })
 export class ExperienceModule {}

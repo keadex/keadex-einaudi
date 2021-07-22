@@ -13,9 +13,12 @@ import {
   CreateExperienceDto,
   UpdateExperienceDto,
 } from '../../dto/experience.dto';
+import { Logger } from '@nestjs/common';
 
 @Resolver(() => Experience)
 export class ExperienceResolver {
+  private readonly logger = new Logger(ExperienceResolver.name);
+
   constructor(private experienceService: ExperienceService) {}
 
   @Query(() => Experience, { name: 'experience' })

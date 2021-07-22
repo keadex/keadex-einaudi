@@ -10,4 +10,6 @@
 - Apollo Federation / Managed Federation
 - Mongoose
 - Apache Kafka
+- Winston
+- Winston Daily Rotate File
 - ...
