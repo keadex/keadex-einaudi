@@ -18,9 +18,9 @@ export class Experience {
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: Employer.name })
   employers?: MongooseSchema.Types.ObjectId[] | Employer[];
 
-  // @Field(() => [Company], { nullable: true })
-  // @Prop({ type: [MongooseSchema.Types.ObjectId], ref: Company.name })
-  // customers?: MongooseSchema.Types.ObjectId[] | Company[];
+  @Field(() => [Company], { nullable: true })
+  @Prop({ type: [MongooseSchema.Types.ObjectId], ref: Company.name })
+  customers?: MongooseSchema.Types.ObjectId[] | Company[];
 }
 
 export type ExperienceDocument = Experience & Document;

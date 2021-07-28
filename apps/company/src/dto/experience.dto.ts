@@ -12,3 +12,11 @@ export class AddEmployersToExperienceDto {
   @Field(() => [String])
   employers?: Schema.Types.ObjectId[];
 }
+
+@InputType()
+export class AddCustomersToExperienceDto {
+  @Field(() => String)
+  _id: Schema.Types.ObjectId;
+  @Field(() => [String])
+  customers?: Schema.Types.ObjectId[];
+}

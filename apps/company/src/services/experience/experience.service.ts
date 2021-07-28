@@ -1,7 +1,10 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Schema as MongooseSchema } from 'mongoose';
-import { AddEmployersToExperienceDto } from '../../dto/experience.dto';
+import {
+  AddCustomersToExperienceDto,
+  AddEmployersToExperienceDto,
+} from '../../dto/experience.dto';
 import { Experience, ExperienceDocument } from '../../models/experience.model';
 
 @Injectable()
@@ -19,11 +22,29 @@ export class ExperienceService {
     return experience.employers;
   }
 
+  async customersForExperience(_id: MongooseSchema.Types.ObjectId) {
+    const experience = await this.experienceModel
+      .findById(_id)
+      .populate('customers')
+      .exec();
+    return experience.customers;
+  }
+
   addEmployersToExperience(payload: AddEmployersToExperienceDto) {
     return this.experienceModel
       .findByIdAndUpdate(
         payload._id,
         { $push: { employers: { $each: payload.employers } } },
+        { new: true },
+      )
+      .exec();
+  }
+
+  addCustomersToExperience(payload: AddCustomersToExperienceDto) {
+    return this.experienceModel
+      .findByIdAndUpdate(
+        payload._id,
+        { $push: { customers: { $each: payload.customers } } },
         { new: true },
       )
       .exec();
