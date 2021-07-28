@@ -50,8 +50,4 @@ export class ExperienceService {
   delete(_id: MongooseSchema.Types.ObjectId) {
     return this.experienceModel.findByIdAndDelete(_id).populate('tasks').exec();
   }
-
-  getHello(): string {
-    return 'Hello World!';
-  }
 }

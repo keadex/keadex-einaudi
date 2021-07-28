@@ -6,9 +6,9 @@ export class CreateExperienceDto {
 }
 
 @InputType()
-export class AddCompaniesToExperienceDto {
+export class AddEmployersToExperienceDto {
   @Field(() => String)
   _id: Schema.Types.ObjectId;
   @Field(() => [String])
-  companies?: Schema.Types.ObjectId[];
+  employers?: Schema.Types.ObjectId[];
 }

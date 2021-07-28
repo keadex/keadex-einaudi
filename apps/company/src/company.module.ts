@@ -13,6 +13,9 @@ import { ExperienceService } from './services/experience/experience.service';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
 import { ExperienceController } from './controller/experience.controller';
+import { Employer, EmployerSchema } from './models/employer.model';
+import { EmployerResolver } from './resolvers/employer/employer.resolver';
+import { EmployerService } from './services/employer/employer.service';
 
 @Module({
   imports: [
@@ -40,6 +43,7 @@ import { ExperienceController } from './controller/experience.controller';
     MongooseModule.forFeature([
       { name: Company.name, schema: CompanySchema },
       { name: Experience.name, schema: ExperienceSchema },
+      { name: Employer.name, schema: EmployerSchema },
     ]),
     GraphQLFederationModule.forRoot({
       autoSchemaFile: join(
@@ -83,6 +87,8 @@ import { ExperienceController } from './controller/experience.controller';
     CompanyResolver,
     ExperienceService,
     ExperienceResolver,
+    EmployerService,
+    EmployerResolver,
   ],
   controllers: [ExperienceController],
 })

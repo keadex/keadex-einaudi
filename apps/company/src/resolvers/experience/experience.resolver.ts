@@ -8,21 +8,22 @@ import {
 import { Experience } from '../../models/experience.model';
 import { Company } from '../../models/company.model';
 import { ExperienceService } from '../../services/experience/experience.service';
-import { AddCompaniesToExperienceDto } from '../../dto/experience.dto';
+import { AddEmployersToExperienceDto } from '../../dto/experience.dto';
+import { Employer } from '../../models/employer.model';
 
 @Resolver(() => Experience)
 export class ExperienceResolver {
   constructor(private readonly experienceService: ExperienceService) {}
 
   @Mutation(() => Experience)
-  async addCompaniesToExperience(
-    @Args('payload') payload: AddCompaniesToExperienceDto,
+  async addEmployersToExperience(
+    @Args('payload') payload: AddEmployersToExperienceDto,
   ) {
-    return this.experienceService.addCompaniesToExperience(payload);
+    return this.experienceService.addEmployersToExperience(payload);
   }
 
-  @ResolveField(() => [Company], { name: 'companies' })
-  public companies(@Parent() experience: Experience) {
-    return this.experienceService.companiesForExperience(experience._id);
+  @ResolveField(() => [Employer], { name: 'employers' })
+  public employers(@Parent() experience: Experience) {
+    return this.experienceService.employersForExperience(experience._id);
   }
 }

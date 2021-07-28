@@ -1,32 +1,29 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Schema as MongooseSchema } from 'mongoose';
-import { AddCompaniesToExperienceDto } from '../../dto/experience.dto';
+import { AddEmployersToExperienceDto } from '../../dto/experience.dto';
 import { Experience, ExperienceDocument } from '../../models/experience.model';
-import { Company, CompanyDocument } from '../../models/company.model';
 
 @Injectable()
 export class ExperienceService {
   constructor(
-    @InjectModel(Company.name)
-    private companyModel: Model<CompanyDocument>,
     @InjectModel(Experience.name)
     private experienceModel: Model<ExperienceDocument>,
   ) {}
 
-  async companiesForExperience(_id: MongooseSchema.Types.ObjectId) {
+  async employersForExperience(_id: MongooseSchema.Types.ObjectId) {
     const experience = await this.experienceModel
       .findById(_id)
-      .populate({ path: 'companies', model: this.companyModel })
+      .populate([{ path: 'employers', populate: { path: 'company' } }])
       .exec();
-    return experience.companies;
+    return experience.employers;
   }
 
-  addCompaniesToExperience(payload: AddCompaniesToExperienceDto) {
+  addEmployersToExperience(payload: AddEmployersToExperienceDto) {
     return this.experienceModel
       .findByIdAndUpdate(
         payload._id,
-        { $push: { companies: { $each: payload.companies } } },
+        { $push: { employers: { $each: payload.employers } } },
         { new: true },
       )
       .exec();
