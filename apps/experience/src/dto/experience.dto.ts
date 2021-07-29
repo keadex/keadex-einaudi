@@ -18,6 +18,8 @@ export class CreateExperienceDto {
   avatarFileName: string;
   @Field(() => [String])
   tasks?: Schema.Types.ObjectId[];
+  @Field(() => [String])
+  sectors?: Schema.Types.ObjectId[];
 }
 
 @InputType()

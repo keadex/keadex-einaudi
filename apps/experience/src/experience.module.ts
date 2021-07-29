@@ -10,6 +10,7 @@ import { join } from 'path';
 import { ExperienceResolver } from './resolvers/experience/experience.resolver';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
+import { SectorModule } from './modules/sector/sector.module';
 
 @Module({
   imports: [
@@ -71,6 +72,7 @@ import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
       },
     ]),
     TaskModule,
+    SectorModule,
   ],
   providers: [Logger, ExperienceService, ExperienceResolver],
 })

@@ -30,20 +30,23 @@ export class ExperienceService {
   }
 
   findById(_id: MongooseSchema.Types.ObjectId) {
-    return this.experienceModel.findById(_id).populate('tasks').exec();
+    return this.experienceModel
+      .findById(_id)
+      .populate(['tasks', 'sectors'])
+      .exec();
   }
 
   list(filters: ListExperienceDto) {
     return this.experienceModel
       .find({ ...filters })
-      .populate('tasks')
+      .populate(['tasks', 'sectors'])
       .exec();
   }
 
   update(payload: UpdateExperienceDto) {
     return this.experienceModel
       .findByIdAndUpdate(payload._id, payload, { new: true })
-      .populate('tasks')
+      .populate(['tasks', 'sectors'])
       .exec();
   }
 

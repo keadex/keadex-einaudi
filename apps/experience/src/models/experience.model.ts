@@ -2,6 +2,7 @@ import { ObjectType, Directive, Field } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Task } from './task.model';
 import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Sector } from './sector.model';
 
 @Schema()
 @ObjectType()
@@ -37,7 +38,9 @@ export class Experience {
   // @Field((type) => [Customer])
   // customers: Customer[];
 
-  // @Field((type) => [Sector])
+  @Field(() => [Sector])
+  @Prop({ type: [MongooseSchema.Types.ObjectId], ref: Sector.name })
+  sectors: MongooseSchema.Types.ObjectId[] | Sector[];
   // sectors: Sector[];
 
   // @Field((type) => [Skill])
