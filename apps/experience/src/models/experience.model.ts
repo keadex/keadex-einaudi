@@ -30,18 +30,10 @@ export class Experience {
   @Field(() => [Task])
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: Task.name })
   tasks: MongooseSchema.Types.ObjectId[] | Task[];
-  //tasks?: Task[];
-
-  // @Field((type) => [Company])
-  // companies: Company[];
-
-  // @Field((type) => [Customer])
-  // customers: Customer[];
 
   @Field(() => [Sector])
   @Prop({ type: [MongooseSchema.Types.ObjectId], ref: Sector.name })
   sectors: MongooseSchema.Types.ObjectId[] | Sector[];
-  // sectors: Sector[];
 
   // @Field((type) => [Skill])
   // skills: Skill[];
