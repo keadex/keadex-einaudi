@@ -1,22 +1,13 @@
 {
   "collection": "@nestjs/schematics",
-  "sourceRoot": "apps/keadex-einaudi/src",
+  "sourceRoot": "apps/gateway/src",
   "monorepo": true,
-  "root": "apps/keadex-einaudi",
+  "root": "apps/gateway",
   "compilerOptions": {
     "webpack": true,
-    "tsConfigPath": "apps/keadex-einaudi/tsconfig.app.json"
+    "tsConfigPath": "apps/gateway/tsconfig.app.json"
   },
   "projects": {
-    "keadex-einaudi": {
-      "type": "application",
-      "root": "apps/keadex-einaudi",
-      "entryFile": "main",
-      "sourceRoot": "apps/keadex-einaudi/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/keadex-einaudi/tsconfig.app.json"
-      }
-    },
     "gateway": {
       "type": "application",
       "root": "apps/gateway",
@@ -42,6 +33,15 @@
       "sourceRoot": "apps/company/src",
       "compilerOptions": {
         "tsConfigPath": "apps/company/tsconfig.app.json"
+      }
+    },
+    "technology": {
+      "type": "application",
+      "root": "apps/technology",
+      "entryFile": "main",
+      "sourceRoot": "apps/technology/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/technology/tsconfig.app.json"
       }
     }
   }
