@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { MicroserviceOptions, Transport } from '@nestjs/microservices';
-import { TechnologyModule } from './technology.module';
+import { SkillModule } from './skill.module';
 import * as dotenv from 'dotenv';
 import {
   WinstonModule,
@@ -12,7 +12,7 @@ import * as DailyRotateFile from 'winston-daily-rotate-file';
 dotenv.config();
 
 async function bootstrap() {
-  const app = await NestFactory.create(TechnologyModule, {
+  const app = await NestFactory.create(SkillModule, {
     logger: WinstonModule.createLogger({
       level: process.env.LOG_LEVEL,
       transports: [
@@ -46,21 +46,21 @@ async function bootstrap() {
     transport: Transport.KAFKA,
     options: {
       client: {
-        clientId: 'technology', // technology-server
+        clientId: 'skill', // skill-server
         brokers: [
-          process.env.TECHNOLOGY_MS_KAFKA_HOST +
+          process.env.SKILL_MS_KAFKA_HOST +
             ':' +
-            process.env.TECHNOLOGY_MS_KAFKA_PORT,
+            process.env.SKILL_MS_KAFKA_PORT,
         ],
       },
       consumer: {
-        groupId: 'technology-consumer', // technology-consumer-server
+        groupId: 'skill-consumer', // skill-consumer-server
       },
     },
   });
 
   app.startAllMicroservices();
-  await app.listen(process.env.TECHNOLOGY_MS_TCP_PORT);
-  console.log(`Technology microservice is running on: ${await app.getUrl()}`);
+  await app.listen(process.env.SKILL_MS_TCP_PORT);
+  console.log(`Skill microservice is running on: ${await app.getUrl()}`);
 }
 bootstrap();

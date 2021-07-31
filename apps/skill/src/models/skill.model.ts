@@ -5,7 +5,7 @@ import { Document, Schema as MongooseSchema } from 'mongoose';
 @Schema()
 @ObjectType()
 @Directive('@key(fields: "_id")')
-export class Technology {
+export class Skill {
   @Field(() => String)
   _id: MongooseSchema.Types.ObjectId;
 
@@ -14,6 +14,6 @@ export class Technology {
   name: string;
 }
 
-export type TechnologyDocument = Technology & Document;
+export type SkillDocument = Skill & Document;
 
-export const TechnologySchema = SchemaFactory.createForClass(Technology);
+export const SkillSchema = SchemaFactory.createForClass(Skill);

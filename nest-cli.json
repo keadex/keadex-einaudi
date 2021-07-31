@@ -35,13 +35,13 @@
         "tsConfigPath": "apps/company/tsconfig.app.json"
       }
     },
-    "technology": {
+    "skill": {
       "type": "application",
-      "root": "apps/technology",
+      "root": "apps/skill",
       "entryFile": "main",
-      "sourceRoot": "apps/technology/src",
+      "sourceRoot": "apps/skill/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/technology/tsconfig.app.json"
+        "tsConfigPath": "apps/skill/tsconfig.app.json"
       }
     }
   }
