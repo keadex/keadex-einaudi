@@ -9,6 +9,11 @@ import { join } from 'path';
 import { SkillResolver } from './resolvers/skill/skill.resolver';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
+import { ExperienceModule } from './modules/experience/experience.module';
+import {
+  ExperienceSkill,
+  ExperienceSkillSchema,
+} from './models/experience-skill.model';
 
 @Module({
   imports: [
@@ -33,7 +38,10 @@ import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
       },
       inject: [ConfigService],
     }),
-    MongooseModule.forFeature([{ name: Skill.name, schema: SkillSchema }]),
+    MongooseModule.forFeature([
+      { name: Skill.name, schema: SkillSchema },
+      { name: ExperienceSkill.name, schema: ExperienceSkillSchema },
+    ]),
     GraphQLFederationModule.forRoot({
       autoSchemaFile: join(
         process.cwd(),
@@ -67,6 +75,7 @@ import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
         inject: [ConfigService],
       },
     ]),
+    ExperienceModule,
   ],
   providers: [SkillService, SkillResolver],
 })

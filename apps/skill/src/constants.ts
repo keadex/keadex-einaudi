@@ -12,3 +12,7 @@ export class CONFIG_KEYS {
   static LOG_FILE_NAME = 'LOG_FILE_NAME';
   static LOG_FILE_NAME_DATE_PATTERN = 'LOG_FILE_NAME_DATE_PATTERN';
 }
+
+export class EVENTS {
+  static EXPERIENCE_CREATED = 'experience_created';
+}
