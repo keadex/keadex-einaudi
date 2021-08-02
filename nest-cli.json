@@ -43,6 +43,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/skill/tsconfig.app.json"
       }
+    },
+    "quote": {
+      "type": "application",
+      "root": "apps/quote",
+      "entryFile": "main",
+      "sourceRoot": "apps/quote/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/quote/tsconfig.app.json"
+      }
     }
   }
 }

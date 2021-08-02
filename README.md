@@ -13,6 +13,7 @@
 - Apache Kafka
 - Winston
 - Winston Daily Rotate File
+- Quotable - Thanks to the open source project https://github.com/lukePeavey/quotable
 - ...
 
 ## Warning
