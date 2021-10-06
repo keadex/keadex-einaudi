@@ -1,3 +1,4 @@
+import { RoleType } from '@keadex/corelib';
 import {
   Field,
   InputType,
@@ -8,8 +9,8 @@ import { Schema } from 'mongoose';
 
 @InputType()
 export class CreateRoleDto {
-  @Field()
-  name: string;
+  @Field(() => RoleType)
+  name: RoleType;
 }
 
 @InputType()
