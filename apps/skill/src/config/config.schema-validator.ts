@@ -11,4 +11,5 @@ export default Joi.object({
   LOG_DIR_NAME: Joi.string(),
   LOG_FILE_NAME: Joi.string(),
   LOG_FILE_NAME_DATE_PATTERN: Joi.string(),
+  JWT_SECRET_KEY: Joi.string(),
 });

@@ -9,6 +9,7 @@ import { AuthResolver } from '../../resolvers/auth/auth.resolver';
 import { GraphQLFederationModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { LocalStrategy } from '../../passport/local.strategy';
+import { JWT_SECRET_KEY } from '@keadex/corelib';
 
 @Module({
   imports: [
@@ -18,7 +19,7 @@ import { LocalStrategy } from '../../passport/local.strategy';
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
-          secret: configService.get(CONFIG_KEYS.JWT_SECRET_KEY),
+          secret: configService.get(JWT_SECRET_KEY),
           signOptions: {
             expiresIn: configService.get(CONFIG_KEYS.JWT_EXPIRES_IN),
           },
