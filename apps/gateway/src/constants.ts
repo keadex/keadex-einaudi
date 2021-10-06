@@ -8,3 +8,5 @@ export class CONFIG_KEYS {
   static JWT_SECRET_KEY = 'JWT_SECRET_KEY';
   static JWT_EXPIRES_IN = 'JWT_EXPIRES_IN';
 }
+
+export const GUEST_USER_APIKEY = 'guest';

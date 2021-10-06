@@ -8,6 +8,7 @@ import {
 import { Client } from '../../models/client.model';
 import { AuthService } from '../../services/auth/auth.service';
 import { LocalAuthGuard } from '../../passport/local-auth.guard';
+import { GUEST_USER_APIKEY } from '../../constants';
 
 export const CurrentUser = createParamDecorator(
   (data: unknown, context: ExecutionContext) => {
@@ -26,7 +27,11 @@ export class AuthResolver {
 
   @Mutation(() => Client)
   @UseGuards(LocalAuthGuard)
-  async login(@CurrentUser() client: Client, @Args('apiKey') apiKey: string) {
+  async login(
+    @CurrentUser() client: Client,
+    @Args('apiKey', { nullable: true, defaultValue: GUEST_USER_APIKEY })
+    apiKey: string,
+  ) {
     return this.authService.login(client);
   }
 }

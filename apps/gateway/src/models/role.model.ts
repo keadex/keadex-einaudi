@@ -13,7 +13,7 @@ import { RoleType } from '@keadex/corelib';
 @Directive('@key(fields: "_id")')
 export class Role {
   @Field(() => String)
-  _id: MongooseSchema.Types.ObjectId;
+  _id?: MongooseSchema.Types.ObjectId;
 
   @Field(() => RoleType)
   @Prop({ type: RoleType, unique: true })

@@ -8,15 +8,15 @@ import { Role } from './role.model';
 @Directive('@key(fields: "_id")')
 export class Client {
   @Field(() => String)
-  _id: MongooseSchema.Types.ObjectId;
+  _id?: MongooseSchema.Types.ObjectId;
 
   @Field()
   @Prop()
-  apiKey: string;
+  apiKey?: string;
 
   @Field()
   @Prop()
-  email: string;
+  email?: string;
 
   @Field({ nullable: true })
   @Prop()
