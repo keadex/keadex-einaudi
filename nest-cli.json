@@ -52,6 +52,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/quote/tsconfig.app.json"
       }
+    },
+    "corelib": {
+      "type": "library",
+      "root": "libs/corelib",
+      "entryFile": "index",
+      "sourceRoot": "libs/corelib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/corelib/tsconfig.lib.json"
+      }
     }
   }
 }
