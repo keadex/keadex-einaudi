@@ -17,9 +17,9 @@ export class AuthService {
   ) {}
 
   async validateClient(apiKey: string): Promise<any> {
-    const client = (await this.clientService.findByApiKey(apiKey)).toObject();
+    const client = await this.clientService.findByApiKey(apiKey);
     if (client) {
-      return client;
+      return client.toObject();
     }
     return null;
   }
