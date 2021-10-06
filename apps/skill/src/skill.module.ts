@@ -14,6 +14,7 @@ import {
   ExperienceSkill,
   ExperienceSkillSchema,
 } from './models/experience-skill.model';
+import { JwtStrategy } from '@keadex/corelib';
 
 @Module({
   imports: [
@@ -77,6 +78,6 @@ import {
     ]),
     ExperienceModule,
   ],
-  providers: [SkillService, SkillResolver],
+  providers: [SkillService, SkillResolver, JwtStrategy],
 })
 export class SkillModule {}
