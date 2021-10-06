@@ -1,5 +1,4 @@
 import { Module } from '@nestjs/common';
-import { GatewayService } from './gateway.service';
 import { GATEWAY_BUILD_SERVICE, GraphQLGatewayModule } from '@nestjs/graphql';
 import { BuildServiceModule } from './build-service.module';
 import { AuthModule } from './modules/auth/auth.module';
@@ -33,6 +32,5 @@ import ConfigSchemaValidator from './config/config.schema-validator';
     }),
     AuthModule,
   ],
-  providers: [GatewayService],
 })
 export class GatewayModule {}
