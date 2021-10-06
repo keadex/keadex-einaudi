@@ -13,12 +13,18 @@ import {
   CreateSkillDto,
   UpdateSkillDto,
 } from '../../dto/skill.dto';
+import { UseGuards } from '@nestjs/common';
+import { JwtAuthGuard } from '@keadex/corelib';
+import { Roles } from '@keadex/corelib';
+import { RoleType } from '@keadex/corelib';
 
 @Resolver(() => Skill)
 export class SkillResolver {
   constructor(private skillService: SkillService) {}
 
   @Query(() => Skill, { name: 'skill' })
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async getSkill(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ): Promise<Skill> {
@@ -26,6 +32,8 @@ export class SkillResolver {
   }
 
   @Query(() => [Skill], { name: 'skills' })
+  @Roles(RoleType.DEVELOPER)
+  @UseGuards(JwtAuthGuard)
   async getSkills(
     @Args('filters', { nullable: true }) filters?: ListSkillsDto,
   ) {
