@@ -16,6 +16,7 @@ import { ExperienceController } from './controller/experience.controller';
 import { Employer, EmployerSchema } from './models/employer.model';
 import { EmployerResolver } from './resolvers/employer/employer.resolver';
 import { EmployerService } from './services/employer/employer.service';
+import { JwtStrategy } from '@keadex/corelib';
 
 @Module({
   imports: [
@@ -89,6 +90,7 @@ import { EmployerService } from './services/employer/employer.service';
     ExperienceResolver,
     EmployerService,
     EmployerResolver,
+    JwtStrategy,
   ],
   controllers: [ExperienceController],
 })

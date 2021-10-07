@@ -13,12 +13,16 @@ import {
   CreateEmployerDto,
   UpdateEmployerDto,
 } from '../../dto/employer.dto';
+import { Roles, RoleType, JwtAuthGuard } from '@keadex/corelib';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Employer)
 export class EmployerResolver {
   constructor(private employerService: EmployerService) {}
 
   @Query(() => Employer, { name: 'employer' })
+  @Roles(RoleType.GUEST)
+  @UseGuards(JwtAuthGuard)
   async getEmployer(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ): Promise<Employer> {
@@ -26,6 +30,8 @@ export class EmployerResolver {
   }
 
   @Query(() => [Employer], { name: 'employers' })
+  @Roles(RoleType.GUEST)
+  @UseGuards(JwtAuthGuard)
   async getEmployers(
     @Args('filters', { nullable: true }) filters?: ListEmployersDto,
   ) {
@@ -33,16 +39,22 @@ export class EmployerResolver {
   }
 
   @Mutation(() => Employer)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async createEmployer(@Args('payload') payload: CreateEmployerDto) {
     return this.employerService.create(payload);
   }
 
   @Mutation(() => Employer)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async updateEmployer(@Args('payload') payload: UpdateEmployerDto) {
     return this.employerService.update(payload);
   }
 
   @Mutation(() => Employer)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async deleteEmployer(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ) {

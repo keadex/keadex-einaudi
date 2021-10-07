@@ -1,3 +1,5 @@
+import { Roles, RoleType, JwtAuthGuard } from '@keadex/corelib';
+import { UseGuards } from '@nestjs/common';
 import {
   Args,
   Mutation,
@@ -19,6 +21,8 @@ export class SectorResolver {
   constructor(private sectorService: SectorService) {}
 
   @Query(() => Sector, { name: 'sector' })
+  @Roles(RoleType.GUEST)
+  @UseGuards(JwtAuthGuard)
   async getSector(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ): Promise<Sector> {
@@ -26,6 +30,8 @@ export class SectorResolver {
   }
 
   @Query(() => [Sector], { name: 'sectors' })
+  @Roles(RoleType.GUEST)
+  @UseGuards(JwtAuthGuard)
   async getSectors(
     @Args('filters', { nullable: true }) filters?: ListSectorDto,
   ) {
@@ -33,16 +39,22 @@ export class SectorResolver {
   }
 
   @Mutation(() => Sector)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async createSector(@Args('payload') payload: CreateSectorDto) {
     return this.sectorService.create(payload);
   }
 
   @Mutation(() => Sector)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async updateSector(@Args('payload') payload: UpdateSectorDto) {
     return this.sectorService.update(payload);
   }
 
   @Mutation(() => Sector)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async deleteSector(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ) {

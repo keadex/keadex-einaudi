@@ -11,6 +11,7 @@ import { ExperienceResolver } from './resolvers/experience/experience.resolver';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
 import { SectorModule } from './modules/sector/sector.module';
+import { JwtStrategy } from '@keadex/corelib';
 
 @Module({
   imports: [
@@ -74,6 +75,6 @@ import { SectorModule } from './modules/sector/sector.module';
     TaskModule,
     SectorModule,
   ],
-  providers: [Logger, ExperienceService, ExperienceResolver],
+  providers: [Logger, ExperienceService, ExperienceResolver, JwtStrategy],
 })
 export class ExperienceModule {}

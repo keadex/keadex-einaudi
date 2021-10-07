@@ -13,7 +13,8 @@ import {
   CreateExperienceDto,
   UpdateExperienceDto,
 } from '../../dto/experience.dto';
-import { Logger } from '@nestjs/common';
+import { Logger, UseGuards } from '@nestjs/common';
+import { Roles, RoleType, JwtAuthGuard } from '@keadex/corelib';
 
 @Resolver(() => Experience)
 export class ExperienceResolver {
@@ -22,6 +23,8 @@ export class ExperienceResolver {
   constructor(private experienceService: ExperienceService) {}
 
   @Query(() => Experience, { name: 'experience' })
+  @Roles(RoleType.GUEST)
+  @UseGuards(JwtAuthGuard)
   async getExperience(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ): Promise<Experience> {
@@ -29,6 +32,8 @@ export class ExperienceResolver {
   }
 
   @Query(() => [Experience], { name: 'experiences' })
+  @Roles(RoleType.GUEST)
+  @UseGuards(JwtAuthGuard)
   async getExperiences(
     @Args('filters', { nullable: true }) filters?: ListExperienceDto,
   ) {
@@ -36,16 +41,22 @@ export class ExperienceResolver {
   }
 
   @Mutation(() => Experience)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async createExperience(@Args('payload') payload: CreateExperienceDto) {
     return this.experienceService.create(payload);
   }
 
   @Mutation(() => Experience)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async updateExperience(@Args('payload') payload: UpdateExperienceDto) {
     return this.experienceService.update(payload);
   }
 
   @Mutation(() => Experience)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async deleteExperience(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ) {

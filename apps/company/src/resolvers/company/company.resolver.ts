@@ -13,12 +13,16 @@ import {
   CreateCompanyDto,
   UpdateCompanyDto,
 } from '../../dto/company.dto';
+import { Roles, RoleType, JwtAuthGuard } from '@keadex/corelib';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Company)
 export class CompanyResolver {
   constructor(private companyService: CompanyService) {}
 
   @Query(() => Company, { name: 'company' })
+  @Roles(RoleType.GUEST)
+  @UseGuards(JwtAuthGuard)
   async getCompany(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ): Promise<Company> {
@@ -26,6 +30,8 @@ export class CompanyResolver {
   }
 
   @Query(() => [Company], { name: 'companies' })
+  @Roles(RoleType.GUEST)
+  @UseGuards(JwtAuthGuard)
   async getCompanies(
     @Args('filters', { nullable: true }) filters?: ListCompaniesDto,
   ) {
@@ -33,16 +39,22 @@ export class CompanyResolver {
   }
 
   @Mutation(() => Company)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async createCompany(@Args('payload') payload: CreateCompanyDto) {
     return this.companyService.create(payload);
   }
 
   @Mutation(() => Company)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async updateCompany(@Args('payload') payload: UpdateCompanyDto) {
     return this.companyService.update(payload);
   }
 
   @Mutation(() => Company)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async deleteCompany(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ) {

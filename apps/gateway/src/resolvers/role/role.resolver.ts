@@ -9,7 +9,8 @@ import { Schema } from 'mongoose';
 import { Role } from '../../models/role.model';
 import { RoleService } from '../../services/role/role.service';
 import { ListRoleDto, CreateRoleDto, UpdateRoleDto } from '../../dto/role.dto';
-import { Logger } from '@nestjs/common';
+import { Logger, UseGuards } from '@nestjs/common';
+import { JwtAuthGuard, Roles, RoleType } from '@keadex/corelib';
 
 @Resolver(() => Role)
 export class RoleResolver {
@@ -18,6 +19,8 @@ export class RoleResolver {
   constructor(private roleService: RoleService) {}
 
   @Query(() => Role, { name: 'role' })
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async getRole(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ): Promise<Role> {
@@ -25,21 +28,29 @@ export class RoleResolver {
   }
 
   @Query(() => [Role], { name: 'roles' })
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async getRoles(@Args('filters', { nullable: true }) filters?: ListRoleDto) {
     return this.roleService.list(filters);
   }
 
   @Mutation(() => Role)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async createRole(@Args('payload') payload: CreateRoleDto) {
     return this.roleService.create(payload);
   }
 
   @Mutation(() => Role)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async updateRole(@Args('payload') payload: UpdateRoleDto) {
     return this.roleService.update(payload);
   }
 
   @Mutation(() => Role)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async deleteRole(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ) {

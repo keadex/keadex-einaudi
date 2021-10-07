@@ -13,12 +13,16 @@ import {
 } from '../../dto/experience.dto';
 import { Employer } from '../../models/employer.model';
 import { Company } from '../../models/company.model';
+import { Roles, RoleType, JwtAuthGuard } from '@keadex/corelib';
+import { UseGuards } from '@nestjs/common';
 
 @Resolver(() => Experience)
 export class ExperienceResolver {
   constructor(private readonly experienceService: ExperienceService) {}
 
   @Mutation(() => Experience)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async addEmployersToExperience(
     @Args('payload') payload: AddEmployersToExperienceDto,
   ) {
@@ -26,6 +30,8 @@ export class ExperienceResolver {
   }
 
   @Mutation(() => Experience)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async addCustomersToExperience(
     @Args('payload') payload: AddCustomersToExperienceDto,
   ) {

@@ -7,6 +7,7 @@ import { QuoteResolver } from './resolvers/quote/quote.resolver';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { CONFIG_KEYS, SERVICES_NAMES } from './constants';
 import { QuotesAPI } from './datasources/quotes.api';
+import { JwtStrategy } from '@keadex/corelib';
 
 @Module({
   imports: [
@@ -58,6 +59,6 @@ import { QuotesAPI } from './datasources/quotes.api';
       },
     ]),
   ],
-  providers: [QuoteResolver],
+  providers: [QuoteResolver, JwtStrategy],
 })
 export class QuoteModule {}

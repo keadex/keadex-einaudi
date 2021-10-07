@@ -23,7 +23,7 @@ export class SkillResolver {
   constructor(private skillService: SkillService) {}
 
   @Query(() => Skill, { name: 'skill' })
-  @Roles(RoleType.ADMIN)
+  @Roles(RoleType.GUEST)
   @UseGuards(JwtAuthGuard)
   async getSkill(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
@@ -32,7 +32,7 @@ export class SkillResolver {
   }
 
   @Query(() => [Skill], { name: 'skills' })
-  @Roles(RoleType.DEVELOPER)
+  @Roles(RoleType.GUEST)
   @UseGuards(JwtAuthGuard)
   async getSkills(
     @Args('filters', { nullable: true }) filters?: ListSkillsDto,
@@ -41,16 +41,22 @@ export class SkillResolver {
   }
 
   @Mutation(() => Skill)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async createSkill(@Args('payload') payload: CreateSkillDto) {
     return this.skillService.create(payload);
   }
 
   @Mutation(() => Skill)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async updateSkill(@Args('payload') payload: UpdateSkillDto) {
     return this.skillService.update(payload);
   }
 
   @Mutation(() => Skill)
+  @Roles(RoleType.ADMIN)
+  @UseGuards(JwtAuthGuard)
   async deleteSkill(
     @Args('_id', { type: () => String }) _id: Schema.Types.ObjectId,
   ) {
