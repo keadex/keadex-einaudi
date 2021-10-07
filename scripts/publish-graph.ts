@@ -9,7 +9,7 @@ const optionDefinitions = [
   { name: 'name', alias: 'n', type: String },
   { name: 'variant', alias: 'v', type: String, defaultValue: 'current' },
   { name: 'port', alias: 'p', type: String },
-  { name: 'path', alias: 'P', type: String, defaultValue: '/graph' },
+  { name: 'path', alias: 'P', type: String, defaultValue: '/graphql' },
 ];
 
 const options = commandLineArgs(optionDefinitions);
