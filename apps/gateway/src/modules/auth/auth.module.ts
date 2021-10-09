@@ -10,6 +10,7 @@ import { GraphQLFederationModule } from '@nestjs/graphql';
 import { join } from 'path';
 import { LocalStrategy } from '../../passport/local.strategy';
 import { JWT_SECRET_KEY } from '@keadex/corelib';
+import { JwtStrategy } from '@keadex/corelib';
 
 @Module({
   imports: [
@@ -38,6 +39,6 @@ import { JWT_SECRET_KEY } from '@keadex/corelib';
       debug: true,
     }),
   ],
-  providers: [AuthService, LocalStrategy, AuthResolver],
+  providers: [AuthService, LocalStrategy, AuthResolver, JwtStrategy],
 })
 export class AuthModule {}
