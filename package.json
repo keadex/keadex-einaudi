@@ -1,6 +1,6 @@
 {
   "name": "keadex-einaudi",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Backend module of Keadex",
   "author": "Keadex",
   "private": true,
