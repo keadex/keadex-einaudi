@@ -1,6 +1,8 @@
 import * as Joi from 'joi';
 
 export default Joi.object({
+  GATEWAY_MS_TCP_PORT: Joi.number(),
+  GRAPHQL_ROUTING_URL: Joi.string(),
   APOLLO_KEY: Joi.string(),
   APOLLO_GRAPH_VARIANT: Joi.string(),
   DATABASE_URL: Joi.string(),

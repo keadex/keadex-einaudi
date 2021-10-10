@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { GatewayModule } from './gateway.module';
-import { config } from 'dotenv';
+import * as dotenv from 'dotenv';
 import {
   WinstonModule,
   utilities as nestWinstonModuleUtilities,
@@ -8,7 +8,7 @@ import {
 import * as winston from 'winston';
 import * as DailyRotateFile from 'winston-daily-rotate-file';
 
-config({ path: 'apps/gateway/.env' });
+dotenv.config();
 
 async function bootstrap() {
   const app = await NestFactory.create(GatewayModule, {
@@ -41,6 +41,6 @@ async function bootstrap() {
       ],
     }),
   });
-  await app.listen(3000);
+  await app.listen(process.env.GATEWAY_MS_TCP_PORT);
 }
 bootstrap();
