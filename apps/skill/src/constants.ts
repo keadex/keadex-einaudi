@@ -1,0 +1,18 @@
+export class SERVICES_NAMES {
+  static SKILL_SERVICE = 'SKILL_SERVICE';
+}
+
+export class CONFIG_KEYS {
+  static DATABASE_SKILL = 'DATABASE_SKILL';
+  static SKILL_MS_KAFKA_HOST = 'SKILL_MS_KAFKA_HOST';
+  static SKILL_MS_KAFKA_PORT = 'SKILL_MS_KAFKA_PORT';
+  static LOG_LEVEL = 'LOG_LEVEL';
+  static LOG_DATE_PATTERN = 'LOG_DATE_PATTERN';
+  static LOG_DIR_NAME = 'LOG_DIR_NAME';
+  static LOG_FILE_NAME = 'LOG_FILE_NAME';
+  static LOG_FILE_NAME_DATE_PATTERN = 'LOG_FILE_NAME_DATE_PATTERN';
+}
+
+export class EVENTS {
+  static EXPERIENCE_CREATED = 'experience_created';
+}

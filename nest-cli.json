@@ -1,0 +1,66 @@
+{
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/gateway/src",
+  "monorepo": true,
+  "root": "apps/gateway",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/gateway/tsconfig.app.json"
+  },
+  "projects": {
+    "gateway": {
+      "type": "application",
+      "root": "apps/gateway",
+      "entryFile": "main",
+      "sourceRoot": "apps/gateway/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/gateway/tsconfig.app.json"
+      }
+    },
+    "experience": {
+      "type": "application",
+      "root": "apps/experience",
+      "entryFile": "main",
+      "sourceRoot": "apps/experience/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/experience/tsconfig.app.json"
+      }
+    },
+    "company": {
+      "type": "application",
+      "root": "apps/company",
+      "entryFile": "main",
+      "sourceRoot": "apps/company/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/company/tsconfig.app.json"
+      }
+    },
+    "skill": {
+      "type": "application",
+      "root": "apps/skill",
+      "entryFile": "main",
+      "sourceRoot": "apps/skill/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/skill/tsconfig.app.json"
+      }
+    },
+    "quote": {
+      "type": "application",
+      "root": "apps/quote",
+      "entryFile": "main",
+      "sourceRoot": "apps/quote/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/quote/tsconfig.app.json"
+      }
+    },
+    "corelib": {
+      "type": "library",
+      "root": "libs/corelib",
+      "entryFile": "index",
+      "sourceRoot": "libs/corelib/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/corelib/tsconfig.lib.json"
+      }
+    }
+  }
+}
