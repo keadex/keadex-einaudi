@@ -24,6 +24,7 @@ jobs:
           sudo apt --assume-yes install rsync grsync
   build:
     needs: setup
+    runs-on: ubuntu-latest
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - name: Checkout code
