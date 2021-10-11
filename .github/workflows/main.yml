@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Install ts-node
-        uses: npm install -g ts-node
+        run: npm install -g ts-node
 
       - name: Install rsync
         run: |
