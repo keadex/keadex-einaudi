@@ -3,5 +3,5 @@ import { readdirSync } from 'fs';
 
 readdirSync('./apps/').forEach((microservice) => {
   console.log(`Building ${microservice} microservice`);
-  shell.exec(`nest build ${microservice}$`);
+  shell.exec(`nest build ${microservice}`);
 });
