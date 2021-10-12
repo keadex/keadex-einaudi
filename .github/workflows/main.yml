@@ -47,6 +47,13 @@ jobs:
 
       - name: Build
         run: yarn build-all
+      
+      - name: Upload artifact
+        uses: actions/upload-artifact@master
+        with:
+          name: keadex-einaudi-artifact
+          path: ./dist
+          retention-days: 1
 
       #- name: Test
       #  run: npm test      
@@ -54,11 +61,10 @@ jobs:
     needs: build
     runs-on: ubuntu-latest
     steps:
-      - name: Test
-        run: ls   
-      
-      - name: Install Dependencies
-        run: yarn install
+      - uses: actions/download-artifact@master
+        with:
+          name: keadex-einaudi-artifact
+          path: ./dist
     
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
