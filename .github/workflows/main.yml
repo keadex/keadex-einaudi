@@ -45,7 +45,7 @@ jobs:
     
       - name: Generating env files
         run: |
-          secrets_sh=`echo "${{ toJSON(secrets); }}"`
+          secrets_sh=`echo "${{ toJSON(secrets) }}"`
           cd ./apps
           for dir in *;
           do
