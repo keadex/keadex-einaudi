@@ -49,7 +49,7 @@ jobs:
           cd ./dist/apps
           for dir in *;
           do
-            printf "$secrets_sh" | grep -Pzo "((?<=  ${dir^^}_ENV: )[^,]*)" >> ./$dir/.env
+            echo "$secrets_sh" | grep -Pzo "((?<=  ${dir^^}_ENV: )[^,]*)" >> ./$dir/.env
           done
                 
       - name: Upload artifact
