@@ -45,11 +45,11 @@ jobs:
     
       - name: Generating env files
         run: |
-          secrets_sh=`echo "${{ toJSON(secrets) }}"`
+          secrets_sh=`printf "${{ toJSON(secrets) }}"`
           cd ./dist/apps
           for dir in *;
           do
-            echo "$secrets_sh" | grep ${dir^^}_ENV | sed -r "s/^((  ${dir^^}_ENV: )(.*),)/\3/" >> ./$dir/.env
+            printf "$secrets_sh" | grep ${dir^^}_ENV | sed -r "s/^((  ${dir^^}_ENV: )(.*),)/\3/" >> ./$dir/.env
           done
                 
       - name: Upload artifact
