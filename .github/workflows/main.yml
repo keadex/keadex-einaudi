@@ -45,14 +45,13 @@ jobs:
     
       - name: Generating env files
         run: |
-          cd ./dist/apps
+          secrets_sh=`echo "${{ toJSON(secrets); }}"`
+          cd ./apps
           for dir in *;
-            do (
-              echo "ENV_SECRETS_NAME=${dir^^}_ENV" >> $GITHUB_ENV
-              echo "${{ env.ENV_SECRETS_NAME }}" >> ./$dir/.env
-            );
+          do
+            echo "$secrets_sh" | grep ${dir^^}_ENV | sed -r "s/^((  ${dir^^}_ENV: )(.*),)/\3/" >> ./$dir/.env
           done
-      
+                
       - name: Upload artifact
         uses: actions/upload-artifact@master
         with:
