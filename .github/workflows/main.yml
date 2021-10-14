@@ -49,6 +49,7 @@ jobs:
           cd ./dist/apps
           for dir in *;
           do
+            echo "Generating" ${dir}
             echo "$secrets_sh" | grep -Pzo "((?<=  ${dir^^}_ENV: )[^,]*)" >> ./$dir/.env
           done
                 
