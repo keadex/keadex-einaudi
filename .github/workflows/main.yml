@@ -82,6 +82,7 @@ jobs:
             for dir in *;
             do
               cp ${{ secrets.PATH_ENVS }}/$dir.env ${{ secrets.PATH_DIST_FOLDER }}/apps/$dir/.env
+            done
 #  test:
 #    needs: build
 #    runs-on: ubuntu-latest
