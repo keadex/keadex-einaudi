@@ -69,6 +69,7 @@ jobs:
         
       - name: Deploy
         run: |
+          ls
           rsync -avz ./node_modules/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_NODE_MODULES_FOLDER }}
           rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
 
