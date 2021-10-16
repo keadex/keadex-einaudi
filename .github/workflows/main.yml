@@ -47,7 +47,10 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: keadex-einaudi
-          path: .
+          path: |
+            ./dist
+            ./package.json
+            ./yarn.lock
           retention-days: 1
   deploy:
     needs: build
@@ -70,10 +73,11 @@ jobs:
       - name: Deploy
         run: |
           ls
-          rsync -avz ./node_modules/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_NODE_MODULES_FOLDER }}
+          rsync -avz ./package.json ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_NODE_MODULES_FOLDER }}
+          rsync -avz ./yarn.lock ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_NODE_MODULES_FOLDER }}
           rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
 
-      - name: Copy env files
+      - name: Install node modules & Copy env files
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -81,6 +85,8 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
+            cd ${{ secrets.PATH_DIST_FOLDER }}
+            yarn install --frozen-lockfile
             cd ${{ secrets.PATH_DIST_FOLDER }}/apps
             for dir in *;
             do
