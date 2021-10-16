@@ -59,7 +59,7 @@ jobs:
       - uses: actions/download-artifact@master
         with:
           name: keadex-einaudi
-          path: ./dist
+          path: ./artifact
     
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
@@ -73,9 +73,9 @@ jobs:
       - name: Deploy
         run: |
           ls
-          rsync -avz ./package.json ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_NODE_MODULES_FOLDER }}
-          rsync -avz ./yarn.lock ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_NODE_MODULES_FOLDER }}
-          rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
+          rsync -avz ./artifact/package.json ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
+          rsync -avz ./artifact/yarn.lock ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
+          rsync -avz ./artifact/dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
 
       - name: Install node modules & Copy env files
         uses: appleboy/ssh-action@master
