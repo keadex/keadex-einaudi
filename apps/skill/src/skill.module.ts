@@ -19,7 +19,12 @@ import { JwtStrategy } from '@keadex/corelib';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['apps/skill/.development.env', 'apps/skill/.env'],
+      envFilePath: [
+        `${
+          process.env.NODE_ENV !== 'production' ? 'apps/skill/' : ''
+        }.development.env`,
+        `${process.env.NODE_ENV !== 'production' ? 'apps/skill/' : ''}.env`,
+      ],
       isGlobal: true,
       cache: true,
       validationSchema: ConfigSchemaValidator,
@@ -30,7 +35,6 @@ import { JwtStrategy } from '@keadex/corelib';
       expandVariables: true,
     }),
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
           uri: configService.get(CONFIG_KEYS.DATABASE_SKILL),

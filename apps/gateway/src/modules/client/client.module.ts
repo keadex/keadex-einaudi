@@ -12,9 +12,7 @@ import { RoleService } from '../../services/role/role.service';
 @Module({
   imports: [
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
-        console.log(configService.get(CONFIG_KEYS.DATABASE_CLIENT));
         return {
           uri: configService.get(CONFIG_KEYS.DATABASE_CLIENT),
           useFindAndModify: false,

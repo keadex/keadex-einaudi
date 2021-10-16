@@ -3,7 +3,7 @@ import { AuthService } from '../../services/auth/auth.service';
 import { ClientModule } from '../client/client.module';
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigService } from '@nestjs/config';
 import { CONFIG_KEYS } from '../../constants';
 import { AuthResolver } from '../../resolvers/auth/auth.resolver';
 import { GraphQLFederationModule } from '@nestjs/graphql';
@@ -17,7 +17,6 @@ import { JwtStrategy } from '@keadex/corelib';
     ClientModule,
     PassportModule,
     JwtModule.registerAsync({
-      imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
           secret: configService.get(JWT_SECRET_KEY),
@@ -29,7 +28,6 @@ import { JwtStrategy } from '@keadex/corelib';
       inject: [ConfigService],
     }),
     GraphQLFederationModule.forRootAsync({
-      imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
           autoSchemaFile: join(

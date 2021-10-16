@@ -12,7 +12,12 @@ import { JwtStrategy } from '@keadex/corelib';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['apps/quote/.development.env', 'apps/quote/.env'],
+      envFilePath: [
+        `${
+          process.env.NODE_ENV !== 'production' ? 'apps/quote/' : ''
+        }.development.env`,
+        `${process.env.NODE_ENV !== 'production' ? 'apps/quote/' : ''}.env`,
+      ],
       isGlobal: true,
       cache: true,
       validationSchema: ConfigSchemaValidator,

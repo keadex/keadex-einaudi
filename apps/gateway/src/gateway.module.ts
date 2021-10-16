@@ -5,10 +5,17 @@ import { AuthModule } from './modules/auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
 import ConfigSchemaValidator from './config/config.schema-validator';
 
+console.log(process.env.NODE_ENV);
+
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['apps/gateway/.development.env', 'apps/gateway/.env'],
+      envFilePath: [
+        `${
+          process.env.NODE_ENV !== 'production' ? 'apps/gateway/' : ''
+        }.development.env`,
+        `${process.env.NODE_ENV !== 'production' ? 'apps/gateway/' : ''}.env`,
+      ],
       isGlobal: true,
       cache: true,
       validationSchema: ConfigSchemaValidator,

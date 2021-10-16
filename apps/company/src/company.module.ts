@@ -21,7 +21,12 @@ import { JwtStrategy } from '@keadex/corelib';
 @Module({
   imports: [
     ConfigModule.forRoot({
-      envFilePath: ['apps/company/.development.env', 'apps/company/.env'],
+      envFilePath: [
+        `${
+          process.env.NODE_ENV !== 'production' ? 'apps/company/' : ''
+        }.development.env`,
+        `${process.env.NODE_ENV !== 'production' ? 'apps/company/' : ''}.env`,
+      ],
       isGlobal: true,
       cache: true,
       validationSchema: ConfigSchemaValidator,
@@ -32,7 +37,6 @@ import { JwtStrategy } from '@keadex/corelib';
       expandVariables: true,
     }),
     MongooseModule.forRootAsync({
-      imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => {
         return {
           uri: configService.get(CONFIG_KEYS.DATABASE_COMPANY),
