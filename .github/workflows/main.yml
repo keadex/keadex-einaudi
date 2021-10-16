@@ -68,7 +68,9 @@ jobs:
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
         
       - name: Deploy
-        run: rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
+        run: |
+          rsync -avz ./node_modules/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_NODE_MODULES_FOLDER }}
+          rsync -avz ./dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
 
       - name: Copy env files
         uses: appleboy/ssh-action@master
