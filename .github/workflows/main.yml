@@ -78,11 +78,10 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: |
-            pm2 stop ${{ secrets.PM2_CONFIG_FILE }}
+            pm2 stop ${{ secrets.PM2_CONFIG_FILE }} -s
         
       - name: Deploy
         run: |
-          ls
           rsync -avz ./artifact/package.json ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
           rsync -avz ./artifact/yarn.lock ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
           rsync -avz ./artifact/dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
@@ -102,7 +101,7 @@ jobs:
             do
               cp ${{ secrets.PATH_ENVS }}/$dir.env ${{ secrets.PATH_DIST_FOLDER }}/apps/$dir/.env
             done
-            pm2 start ${{ secrets.PM2_CONFIG_FILE }}
+            pm2 start ${{ secrets.PM2_CONFIG_FILE }} -s
 #  test:
 #    needs: build
 #    runs-on: ubuntu-latest
