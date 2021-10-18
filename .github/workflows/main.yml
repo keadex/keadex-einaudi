@@ -69,6 +69,16 @@ jobs:
       
       - name: Add Known Hosts
         run: ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+      
+      - name: Stop microservices
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT }}
+          script: |
+            pm2 stop ${{ secrets.PM2_CONFIG_FILE }}
         
       - name: Deploy
         run: |
@@ -77,7 +87,7 @@ jobs:
           rsync -avz ./artifact/yarn.lock ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
           rsync -avz ./artifact/dist/ ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.PATH_DIST_FOLDER }}
 
-      - name: Install node modules & Copy env files
+      - name: Install node modules, copy env files and start microservices
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.SSH_HOST }}
@@ -92,6 +102,7 @@ jobs:
             do
               cp ${{ secrets.PATH_ENVS }}/$dir.env ${{ secrets.PATH_DIST_FOLDER }}/apps/$dir/.env
             done
+            pm2 start ${{ secrets.PM2_CONFIG_FILE }}
 #  test:
 #    needs: build
 #    runs-on: ubuntu-latest
