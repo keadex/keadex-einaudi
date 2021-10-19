@@ -19,7 +19,7 @@ export class Experience {
   @Prop()
   from: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
   to?: string;
 
