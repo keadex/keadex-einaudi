@@ -10,7 +10,7 @@ export class Sector {
   _id: MongooseSchema.Types.ObjectId;
 
   @Field()
-  @Prop()
+  @Prop({ unique: true })
   key: string;
 }
 
