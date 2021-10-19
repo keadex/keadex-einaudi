@@ -12,7 +12,7 @@ export class CreateExperienceDto {
   role: string;
   @Field()
   from: string;
-  @Field()
+  @Field({ nullable: true })
   to?: string;
   @Field()
   avatarFileName: string;

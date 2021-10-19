@@ -23,7 +23,7 @@ export class Experience {
   @Prop()
   to?: string;
 
-  @Field()
+  @Field({ nullable: true })
   @Prop()
   avatarFileName: string;
 
