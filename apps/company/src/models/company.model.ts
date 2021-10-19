@@ -10,7 +10,7 @@ export class Company {
   _id: MongooseSchema.Types.ObjectId;
 
   @Field()
-  @Prop()
+  @Prop({ unique: true })
   name: string;
 
   @Field()
