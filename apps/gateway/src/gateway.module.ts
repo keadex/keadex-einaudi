@@ -29,6 +29,7 @@ console.log(process.env.NODE_ENV);
       useFactory: async () => ({
         gateway: {},
         server: {
+          introspection: true,
           context: ({ req }) => ({
             jwt: req.headers.authorization,
           }),
