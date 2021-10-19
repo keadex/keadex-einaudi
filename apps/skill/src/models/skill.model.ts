@@ -10,7 +10,7 @@ export class Skill {
   _id: MongooseSchema.Types.ObjectId;
 
   @Field()
-  @Prop()
+  @Prop({ unique: true })
   name: string;
 }
 
