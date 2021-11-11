@@ -20,7 +20,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./apps/keadex-einaudi/test/jest-e2e.json",
-    "publish-graph": "ts-node ./scripts/publish-graph.ts"
+    "publish-graph": "ts-node ./scripts/publish-graph.ts",
+    "commit": "git-cz"
   },
   "dependencies": {
     "@apollo/federation": "0.33.0",
@@ -69,6 +70,7 @@
     "eslint": "^7.22.0",
     "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
+    "git-cz": "^4.8.0",
     "jest": "^26.6.3",
     "prettier": "^2.2.1",
     "shelljs": "^0.8.4",
