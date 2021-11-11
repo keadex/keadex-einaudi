@@ -4,6 +4,14 @@
 <p align="center">The backend module built with <a href="https://nestjs.com/" target="_blank">NestJS</a> and <a href="https://graphql.org/" target="_blank">GraphQL</a>.</p>
 </br>
 
+<div align="center">
+
+![GitHub](https://img.shields.io/github/license/keadex/keadex-einaudi)
+![GitHub release (latest by date)](https://img.shields.io/github/v/release/keadex/keadex-einaudi)
+![GitHub Workflow Status](https://img.shields.io/github/workflow/status/keadex/keadex-einaudi/ci-cd)
+
+</div>
+
 # Description
 
 **Keadex Einaudi** represents the backend module of Keadex. It is based on microservices built with NestJS, Apollo and GraphQL.</br>
