@@ -1,5 +1,5 @@
 <p align="center">
-  <a href="https://keadex.io/kealab#keadex-einaudi" target="blank"><img src="https://keadex.io:2053/uploads/keadex_einaudi_dark_d9e36ea5c6.png" width="350" alt="Keadex Einaudi Logo" /></a>
+  <a href="https://keadex.io/kealab#keadex-einaudi" target="blank"><img src="https://keadex.io:2053/uploads/keadex_einaudi_dark_6b14683d67.png" width="350" alt="Keadex Einaudi Logo" /></a>
 </p>
 <p align="center">The backend module built with <a href="https://nestjs.com/" target="_blank">NestJS</a> and <a href="https://graphql.org/" target="_blank">GraphQL</a>.</p>
 </br>
