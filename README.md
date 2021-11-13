@@ -14,9 +14,9 @@
 
 # Description
 
-**Keadex Einaudi** represents the backend module of Keadex. It is based on microservices built with NestJS, Apollo and GraphQL.</br></br>
+**Keadex Einaudi** represents the backend module of Keadex. It is based on microservices built with NestJS, Apollo and GraphQL.</br>
 
-The API Gateway is exposed on: [https://keadex.io/graphql](https://keadex.io/graphql)</br></br>
+The API Gateway is exposed on: [https://keadex.io/graphql](https://keadex.io/graphql)</br>
 
 Keadex Einaudi workspace is a [NestJS Monorepo](https://docs.nestjs.com/cli/monorepo#monorepo-mode), made up of different apps, one for each microservice.</br>
 For further details about the architecture, check the [documentation](https://keadex.io/kealab#keadex-einaudi).
